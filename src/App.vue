@@ -1,7 +1,8 @@
 <template>
   <h3> Hey!</h3>
-  <greeting></greeting>
-  <user :age="20"></user>
+  <button @click="age++">Upadate Age</button>
+  <greeting :age="age"></greeting>
+  <user :age="age"></user>
 </template>
 
 <script>
@@ -13,6 +14,11 @@ export default {
   components: {
     Greeting,
     User,
+  },
+  data() {
+    return {
+      age: "20",
+    }
   }
 }
 </script>
