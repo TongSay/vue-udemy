@@ -1,27 +1,41 @@
 <template>
   <div class="ctr">
-    <questions v-if="
-        questionAnswered < questions.length" 
-        :questions="questions" 
-        :questionAnswered="questionAnswered"/>
-    <resualt v-else />
-    <button type="button" class="reset-btn">Reset</button>
+    <questions 
+      v-if="questionsAnswered < questions.length" 
+      :questions="questions" 
+      :questionsAnswered="questionsAnswered"
+      @question-answered="questionAnswered"
+      />
+    <result 
+    
+    :results="results" 
+    :totalCorrect="totalCorrect" 
+    />
+    
+    <button type="button" 
+    class="reset-btn" 
+    @click.prevent="reset"
+    v-if="questionsAnswered === questions.length"
+    >
+    Reset
+    </button>
 </div>
 </template>
 
 <script>
   import Questions from './components/Questions.vue';
-  import Resualt from './components/Resualt.vue';
+  import Result from './components/Result.vue';
     export default {
       name: "App",
       components: {
         Questions,
-        Resualt,
+        Result,
       },
 
       data() {
           return {
-            questionAnswered: 0,
+            questionsAnswered: 0,
+            totalCorrect:0,
               questions: [
                   {
                       q: 'What is 2 + 2?', 
@@ -98,6 +112,18 @@
                   }
               ]
           }
+        },
+        methods: {
+            questionAnswered(is_correct) {
+                if(is_correct) {
+                  this.totalCorrect++;
+                }
+                this.questionsAnswered++;
+            },
+            reset() {
+                this.questionsAnswered = 0;
+                this.totalCorrect = 0;
+            }
         }
     }
 </script>
